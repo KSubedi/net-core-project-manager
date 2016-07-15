@@ -10,7 +10,7 @@ import Helpers from "../shared/helpers";
 
 var jsonFilePath: string;
 
-let API_URL_SEARCH = "https://api-v2v3search-0.nuget.org/query";
+let API_URL_SEARCH = "https://api-v2v3search-0.nuget.org/autocomplete";
 let API_URL_VERSIONS = "https://api.nuget.org/v3-flatcontainer/";
 
 // Lets you add a new package
@@ -25,6 +25,9 @@ function showSearch() {
     vscode.window.showInputBox({
         placeHolder: "Type the package name or search term."
     }).then(searchValue => {
+
+        vscode.window.setStatusBarMessage("Loading packages...");
+        
         axios.get(API_URL_SEARCH, {
             params: {
                 q: searchValue,
@@ -32,9 +35,7 @@ function showSearch() {
                 take: 100
             }
         }).then(response => {
-            var packageList = response.data.data.map(packageObj => {
-                return packageObj.id;
-            });
+            var packageList = response.data.data;
 
             if (packageList.length < 1) {
                 Helpers.throwError("No results found. Please try again.");
@@ -46,7 +47,10 @@ function showSearch() {
                         }
                     });
             }
+            vscode.window.setStatusBarMessage("");            
         }).catch(error => {
+            vscode.window.setStatusBarMessage("");
+            
             console.error(error);
             Helpers.throwError("Could not connect to Nuget server.");
         });
@@ -55,6 +59,8 @@ function showSearch() {
 
 // Lets you choose a version
 function showVersionChooser(packageName: string) {
+    vscode.window.setStatusBarMessage("Loading package versions...");
+
     axios.get(API_URL_VERSIONS + packageName + "/index.json")
     .then(response => {
         try {
@@ -80,7 +86,9 @@ function showVersionChooser(packageName: string) {
             console.error(error);
             Helpers.throwError("Could not parse response from Nuget server.");
         }
+        vscode.window.setStatusBarMessage("");        
     }).catch(error => {
+        vscode.window.setStatusBarMessage("");        
         console.error(error);
         Helpers.throwError("Could not connect to Nuget server.");
     });;
