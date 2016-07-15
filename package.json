@@ -1,0 +1,43 @@
+{
+  "name": "net-core-project-manager",
+  "displayName": ".Net Core Project Manager (Nuget)",
+  "description": "Lets you manage the project.json for .Net Core applications.",
+  "version": "0.1.9",
+  "publisher": "ksubedi",
+  "apiurl": "https://api-v2v3search-0.nuget.org/query",
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.removePackage",
+    "onCommand:extension.addPackage"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.removePackage",
+        "title": "Nuget: Remove Package"
+      },
+      {
+        "command": "extension.addPackage",
+        "title": "Nuget: Add New Package"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "typescript": "^1.8.5",
+    "vscode": "^0.11.0"
+  },
+  "dependencies": {
+    "axios": "^0.13.0"
+  }
+}
