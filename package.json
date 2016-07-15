@@ -2,9 +2,9 @@
   "name": "net-core-project-manager",
   "displayName": ".Net Core Project Manager (Nuget)",
   "description": "Lets you manage the project.json for .Net Core applications.",
-  "version": "0.1.9",
+  "version": "0.2.4",
   "publisher": "ksubedi",
-  "apiurl": "https://api-v2v3search-0.nuget.org/query",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.0.0"
   },
